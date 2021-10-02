@@ -3,7 +3,8 @@
   "version": "0.0.0",
   "private": true,
   "scripts": {
-    "start": "node ./bin/www"
+    "start": "node ./bin/www",
+    "start-dev":"nodemon ./bin/www"
   },
   "engines": {
     "node": "14.17.3"
@@ -30,5 +31,8 @@
     "url": "https://github.com/adkif/api-sequelize/issues"
   },
   "homepage": "https://github.com/adkif/api-sequelize#readme",
-  "description": ""
+  "description": "",
+  "devDependencies": {
+    "nodemon": "^2.0.13"
+  }
 }
