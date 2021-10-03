@@ -32,14 +32,17 @@ exports.login = async (req, res) => {
           expiresIn: process.env.expire_token,
         }
       );
+      req.user = {
+          token: token,
+          id: result.id,
+          email: result.email
+      };
+      req.user.token = token
+      console.log(req.user);
       return res.status(200).json({
         status: 200,
-        loged: true,
-        token,
-        user: {
-          id: result.id,
-          email: result.email,
-        },
+        logged: true,
+        user: req.user,
       });
     }
   }

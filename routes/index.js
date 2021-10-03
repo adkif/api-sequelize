@@ -6,6 +6,7 @@ const cart = require('./cart.route');
 const order = require('./order.route');
 const user = require('./users');
 var router = express.Router();
+const auth = require('../middlewares/auth.middleware')
 
 /* GET home page. */
 router.get('/', function(req, res, next) {
@@ -13,7 +14,7 @@ router.get('/', function(req, res, next) {
 });
 
 router.use('/users', user);
-router.use('/products', product);
+router.use('/products',product);
 router.use('/categories', category);
 router.use('/customers', customer);
 router.use('/cart', cart);
