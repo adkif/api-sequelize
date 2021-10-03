@@ -17,6 +17,9 @@ const product = db.define('product', {
         type: Sequelize.INTEGER,
         allowNull: false
     },
+    cover:{
+        type: Sequelize.STRING,
+    },
     description: {
         type: Sequelize.STRING,
         allowNull: true
