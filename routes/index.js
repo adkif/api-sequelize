@@ -15,7 +15,7 @@ router.get('/', function(req, res, next) {
 
 router.use('/users', user);
 router.use('/products',product);
-router.use('/categories', auth, category);
+router.use('/categories', category);
 router.use('/customers',auth, customer);
 router.use('/cart',auth, cart);
 router.use('/orders',auth, order);

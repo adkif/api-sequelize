@@ -10,6 +10,7 @@ exports.create = (req, res) => {
     });
     return;
   }
+  
   // Save product in the database
   product.create(req.body)
     .then(data => {
