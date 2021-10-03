@@ -1,9 +1,13 @@
 var express = require('express');
 var router = express.Router();
+var validation = require('../middlewares/user.validation');
+var validationkey = require('../middlewares/validatekey');
+var user = require('../controllers/user.controller');
 
-/* GET users listing. */
-router.get('/', function(req, res, next) {
-  res.send('respond with a resource');
-});
+
+router
+      .post('/login',validationkey ,validation.login, user.login)
+      .post('/register', validation.register,user.register);
+
 
 module.exports = router;
