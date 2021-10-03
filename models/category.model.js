@@ -5,7 +5,7 @@ const category = db.define('category', {
     status: {
         type: Sequelize.INTEGER,
     },
-    nom: {
+    name: {
         type: Sequelize.STRING,
         allowNull: false
     },

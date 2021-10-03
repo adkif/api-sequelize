@@ -5,15 +5,15 @@ const product = db.define('product', {
     status: {
         type: Sequelize.INTEGER,
     },
-    nom: {
+    name: {
         type: Sequelize.STRING,
         allowNull: true
     },
-    prix: {
+    price: {
         type: Sequelize.FLOAT,
         allowNull: false
     },
-    quanitite: {
+    quantity: {
         type: Sequelize.INTEGER,
         allowNull: false
     },
@@ -21,7 +21,7 @@ const product = db.define('product', {
         type: Sequelize.STRING,
         allowNull: true
     },
-    category_id: {
+    categoryId: {
         type: Sequelize.INTEGER,
         allowNull: true
     }
