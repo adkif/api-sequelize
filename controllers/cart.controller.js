@@ -5,8 +5,8 @@ const order = require("../models/order.model");
 customer.hasOne(cart, { foreignKey: "id" });
 cart.belongsTo(customer, { foreignKey: "customerId" })
 // Relation between cart and order
-cart.hasMany(order, { foreignKey: "id" });
-order.belongsTo(cart, { foreignKey: "cartId" });
+cart.hasMany(order, { foreignKey: "cartId" });
+order.belongsTo(cart, { foreignKey: "id" });
 // Create and Save a new cart
 exports.create = (req, res) => {
     // Validate request
