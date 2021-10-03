@@ -3,6 +3,7 @@ const product = require('./product.route');
 const category = require('./category.route');
 const customer = require('./customer.route');
 const cart = require('./cart.route');
+const order = require('./order.route');
 var router = express.Router();
 
 /* GET home page. */
@@ -14,5 +15,6 @@ router.use('/products', product);
 router.use('/categories', category);
 router.use('/customers', customer);
 router.use('/cart', cart);
+router.use('/orders', order);
 
 module.exports = router;
