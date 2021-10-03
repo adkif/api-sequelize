@@ -25,6 +25,7 @@ exports.create = (req, res) => {
 
 // Retrieve all products from the database.
 exports.findAll = (req, res) => {
+
   product.findAll({
     where: {
       status: 1,
