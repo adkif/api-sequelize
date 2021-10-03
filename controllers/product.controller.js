@@ -1,6 +1,9 @@
 const product = require('../models/product.model');
 const { Op } = require("sequelize");
+const category = require('../models/category.model');
 
+category.hasOne(product, {foreignKey:"id"})
+product.belongsTo(category, {foreignKey: "categoryId"})
 // Create and Save a new product
 exports.create = (req, res) => {
   // Validate request
@@ -31,6 +34,10 @@ exports.findAll = (req, res) => {
     where: {
       status: 1,
     },
+    include: [{
+      model: category,
+      require: true
+    }]
   })
     .then(products => {
       res.send(products);
@@ -50,6 +57,10 @@ exports.findOne = (req, res) => {
       id: id,
       status: 1,
     },
+    include: [{
+      model: category,
+      require: true
+    }]
   })
     .then(data => {
       res.send(data);
