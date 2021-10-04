@@ -142,7 +142,7 @@ exports.deleteAll = (req, res) => {
 exports.search = (req, res) => {
   product.findAll(
     {
-      where: {description: {[Op.like]: '%'+req.query.q+'%'}}
+      where: {name: {[Op.like]: '%'+req.query.q+'%'}}
     }
   ).then(data => {
     res.send(data);
