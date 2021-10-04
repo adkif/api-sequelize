@@ -1,50 +1,53 @@
-const product = require('../models/product.model');
+const product = require("../models/product.model");
 const { Op } = require("sequelize");
-const category = require('../models/category.model');
+const category = require("../models/category.model");
 
-category.hasOne(product, {foreignKey:"id"})
-product.belongsTo(category, {foreignKey: "categoryId"})
+category.hasOne(product, { foreignKey: "id" });
+product.belongsTo(category, { foreignKey: "categoryId" });
 // Create and Save a new product
 exports.create = (req, res) => {
   // Validate request
   if (!req.body) {
     res.status(400).send({
-      message: "Content can not be empty!"
+      message: "Content can not be empty!",
     });
     return;
   }
-  
+
   // Save product in the database
-  product.create(req.body)
-    .then(data => {
+  product
+    .create(req.body)
+    .then((data) => {
       res.send(data);
     })
-    .catch(err => {
+    .catch((err) => {
       res.status(500).send({
         message:
-          err.message || "Some error occurred while creating the product."
+          err.message || "Some error occurred while creating the product.",
       });
     });
 };
 
 // Retrieve all products from the database.
 exports.findAll = (req, res) => {
-
-  product.findAll({
-    where: {
-      status: 1,
-    },
-    include: [{
-      model: category,
-      require: true
-    }]
-  })
-    .then(products => {
+  product
+    .findAll({
+      where: {
+        status: 1,
+      },
+      include: [
+        {
+          model: category,
+          require: true,
+        },
+      ],
+    })
+    .then((products) => {
       res.send(products);
     })
-    .catch(err => {
+    .catch((err) => {
       res.status(500).send({
-        message: "Error retrieving products =" + err
+        message: "Error retrieving products =" + err,
       });
     });
 };
@@ -52,22 +55,25 @@ exports.findAll = (req, res) => {
 // Find a single product with an id
 exports.findOne = (req, res) => {
   const id = req.params.productId;
-  product.findOne({
-    where: {
-      id: id,
-      status: 1,
-    },
-    include: [{
-      model: category,
-      require: true
-    }]
-  })
-    .then(data => {
+  product
+    .findOne({
+      where: {
+        id: id,
+        status: 1,
+      },
+      include: [
+        {
+          model: category,
+          require: true,
+        },
+      ],
+    })
+    .then((data) => {
       res.send(data);
     })
-    .catch(err => {
+    .catch((err) => {
       res.status(500).send({
-        message: "Error retrieving product with id=" + id
+        message: "Error retrieving product with id=" + id,
       });
     });
 };
@@ -76,23 +82,24 @@ exports.findOne = (req, res) => {
 exports.update = (req, res) => {
   const id = req.params.productId;
 
-  product.update(req.body, {
-    where: { id: id }
-  })
-    .then(num => {
+  product
+    .update(req.body, {
+      where: { id: id },
+    })
+    .then((num) => {
       if (num == 1) {
         res.send({
-          message: "product was updated successfully."
+          message: "product was updated successfully.",
         });
       } else {
         res.send({
-          message: `Cannot update product with id=${id}. Maybe product was not found or req.body is empty!`
+          message: `Cannot update product with id=${id}. Maybe product was not found or req.body is empty!`,
         });
       }
     })
-    .catch(err => {
+    .catch((err) => {
       res.status(500).send({
-        message: "Error updating product with id=" + id
+        message: "Error updating product with id=" + id,
       });
     });
 };
@@ -101,76 +108,90 @@ exports.update = (req, res) => {
 exports.delete = (req, res) => {
   const id = req.params.productId;
 
-  product.destroy({
-    where: { id: id }
-  })
-    .then(num => {
+  product
+    .destroy({
+      where: { id: id },
+    })
+    .then((num) => {
       if (num == 1) {
         res.send({
-          message: "product was deleted successfully!"
+          message: "product was deleted successfully!",
         });
       } else {
         res.send({
-          message: `Cannot delete product with id=${id}. Maybe product was not found!`
+          message: `Cannot delete product with id=${id}. Maybe product was not found!`,
         });
       }
     })
-    .catch(err => {
+    .catch((err) => {
       res.status(500).send({
-        message: "Could not delete product with id=" + id
+        message: "Could not delete product with id=" + id,
       });
     });
 };
 
 // Delete all products from the database.
 exports.deleteAll = (req, res) => {
-  product.destroy({
-    where: {},
-    truncate: false
-  })
-    .then(nums => {
+  product
+    .destroy({
+      where: {},
+      truncate: false,
+    })
+    .then((nums) => {
       res.send({ message: `${nums} products were deleted successfully!` });
     })
-    .catch(err => {
+    .catch((err) => {
       res.status(500).send({
         message:
-          err.message || "Some error occurred while removing all products."
+          err.message || "Some error occurred while removing all products.",
       });
     });
 };
 
 exports.search = (req, res) => {
-  let q = req.query.q ? "": req.query.q
-  product.findAll(
-    {
+  let q = req.query.q ? "" : req.query.q;
+  product
+    .findAll({
       where: {
-        name: {[Op.like]: '%'+q+'%'}
-      }
-    }
-  ).then(data => {
-    res.send(data);
-  })
-  .catch(err => {
-    res.status(500).send({
-      message: "Error retrieving products =" + err
+        name: { [Op.like]: "%" + q + "%" },
+      },
+      include: [
+        {
+          model: category,
+          require: true,
+        },
+      ],
+    })
+    .then((data) => {
+      res.send(data);
+    })
+    .catch((err) => {
+      res.status(500).send({
+        message: "Error retrieving products =" + err,
+      });
     });
-  });
-}
+};
 
 exports.findByCategory = (req, res) => {
-  let catId = req.params.categoryId 
-  product.findAll(
-    {
+  let catId = req.params.categoryId;
+  product
+    .findAll({
       where: {
-        categoryId: catId
-      }
-    }
-  ).then(data => {
-    res.send(data);
-  })
-  .catch(err => {
-    res.status(500).send({
-      message: "Error retrieving products =" + err
+        categoryId: catId,
+      },
+      include: [
+        {
+          model: category,
+          require: true,
+        },
+      ],
+    })
+    .then((data) => {
+      res.send(data);
+    })
+    .catch((err) => {
+      res.status(500).send({
+        message: "Error retrieving products =" + err,
+      });
     });
-  });
-}
+};
