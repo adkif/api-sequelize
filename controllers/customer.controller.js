@@ -1,5 +1,8 @@
 const customer = require('../models/customer.model');
-
+const user = require('../models/user.model');
+// Relation user and customer
+user.hasOne(customer, { foreignKey: "id" });
+customer.belongsTo(user, { foreignKey: "userId" });
 // Create and Save a new customer
 exports.create = (req, res) => {
   // Validate request
@@ -28,6 +31,9 @@ exports.findAll = (req, res) => {
     where: {
       status: 1,
     },
+    include:[{
+      model:user
+    }]
   })
     .then(customers => {
       res.send(customers);
@@ -47,6 +53,9 @@ exports.findOne = (req, res) => {
       id: id,
       status: 1,
     },
+    include:[{
+      model:user
+    }]
   })
     .then(data => {
       res.send(data);
