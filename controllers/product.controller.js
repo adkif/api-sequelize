@@ -140,11 +140,29 @@ exports.deleteAll = (req, res) => {
 };
 
 exports.search = (req, res) => {
+  let q = req.query.q ? "": req.query.q
   product.findAll(
     {
       where: {
-        name: {[Op.like]: '%'+req.query.q+'%'},
-        categoryId: req.query.category
+        name: {[Op.like]: '%'+q+'%'}
+      }
+    }
+  ).then(data => {
+    res.send(data);
+  })
+  .catch(err => {
+    res.status(500).send({
+      message: "Error retrieving products =" + err
+    });
+  });
+}
+
+exports.findByCategory = (req, res) => {
+  let catId = req.params.categoryId 
+  product.findAll(
+    {
+      where: {
+        categoryId: catId
       }
     }
   ).then(data => {

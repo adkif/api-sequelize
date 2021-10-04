@@ -12,6 +12,9 @@ router.route('/')
 router.route('/search')
 .get(product.search)
 
+router.route('/category/:categoryId')
+.get(product.findByCategory)
+
 router.route('/:productId')
 .get(product.findOne)
 .put(auth, product.update)
