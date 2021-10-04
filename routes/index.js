@@ -10,7 +10,7 @@ const auth = require('../middlewares/auth.middleware')
 
 /* GET home page. */
 router.get('/', function(req, res, next) {
-  res.render('index', { title: 'Express' });
+  res.render('index', { title: 'API Auto' });
 });
 
 router.use('/users', user);
