@@ -149,11 +149,10 @@ exports.deleteAll = (req, res) => {
 };
 
 exports.search = (req, res) => {
-  let q = req.query.q ? "" : req.query.q;
   product
     .findAll({
       where: {
-        name: { [Op.like]: "%" + q + "%" },
+        name: { [Op.like]: "%"+req.query.q+"%" },
       },
       include: [
         {
