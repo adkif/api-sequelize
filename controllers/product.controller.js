@@ -2,7 +2,7 @@ const product = require("../models/product.model");
 const { Op } = require("sequelize");
 const category = require("../models/category.model");
 
-category.hasOne(product, { foreignKey: "id" });
+category.hasMany(product, { foreignKey: "id" });
 product.belongsTo(category, { foreignKey: "categoryId" });
 // Create and Save a new product
 exports.create = (req, res) => {
